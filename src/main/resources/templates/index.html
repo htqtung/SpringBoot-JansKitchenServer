@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    		th:integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" th:crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"></link>
+    
+    <title>Jan's Kitchen</title>
+</head>
+
+<body>
+	
+	<section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Jan's Kitchen</h1>
+<!--           <img th:src="@{/src/main/resources/templates/brand1.png}" /> -->
+          <p class="lead text-muted">Discover and share the joy of cooking with your friends and family in Jan's Kitchen!</p>
+          <p>
+            <a href="/addrecipe" class="btn btn-primary">New recipe</a>
+          </p>
+        </div>
+    </section>
+	
+    <div class="album py-5">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-md-4" th:each="recipe: ${recipes}">
+              <div class="card mb-4 box-shadow">
+				<img 
+					class="card-img-top" 
+					data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="${recipes.photo}" 
+                	data-holder-rendered="true" 
+                	style="height: 225px; width: 100%; display: block;"/>
+                <div class="card-body">
+                	<h5 class="card-title" th:text="${recipe.title}"></h5>
+                  	<p class="card-text" th:text="${recipe.description}"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+	<div class="row justify-content-end">
+			<p class="col-1" th:inline="text" style="margin-right: 10px">[[${#httpServletRequest.remoteUser}]]!</p>
+		    <form class="col-1" th:action="@{/logout}" method="post">
+		        <input type="submit" class="btn btn-danger btn-sm" value="Log Out"/>
+		    </form>
+		</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" 
+			th:integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" th:crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+    		th:integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" th:crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+    		th:integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" th:crossorigin="anonymous"></script>
+ 
+    
+</body>
+</html>

@@ -2,20 +2,25 @@ package fi.haagahelia.SpringBootJansKitchenServer.domain;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 
-@Repository
-public class RecipeRepository {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+//@PreAuthorize("hasRole('ROLE_USER')")
+@RestResource	
+public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 	
-	@Transactional(readOnly = true)
-	public List<Recipe> findAll() {
-		return jdbcTemplate.query("SELECT * FROM recipe", new RecipeRowMapper());
-	}
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	@PreAuthorize("#recipe?.user == null or #employee?.user?.name == authentication?.name")
+//	Recipe save(@Param("recipe") Recipe recipe);
+//	
+//	@Override
+//	@PreAuthorize("@recipeRepisitory.findOne(#id)?.user?.name == authentication?.name")
+//	void delete(@Param("id") Long id);
+//	
+//	@Override
+//	@PreAuthorize("#recipe?.user?.name == authentication?.name")
+//	void delete(@Param("recipe") Recipe recipe);
 	
-	
+	List<Recipe> findByTitle(String title);
 }

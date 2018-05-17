@@ -1,39 +1,63 @@
 package fi.haagahelia.SpringBootJansKitchenServer.domain;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Recipe {
-private long id, user_id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
 	
-	private String title, description, timeToCook;
+	private String title, description, timeToCook, photo;
 	
-	private ArrayList<String> ingredients;
-	private ArrayList<String> methods;
-	private ArrayList<String> photos;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	@JsonIgnore
+	private List<Ingredient> ingredients;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	@JsonIgnore
+	private List<Ingredient> methods;
 	
 	private long loveCount;
-	private Timestamp postTime;
+	private Date postTime;
 	private int servings;
+	
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User user;
 	
 	public Recipe() {
 		
 	}
 
-	public Recipe(long id, long user_id, String title, String description, String timeToCook,
-			ArrayList<String> ingredients, ArrayList<String> methods, ArrayList<String> photos, long loveCount,
-			Timestamp postTime, int servings) {
+	public Recipe(String title, String description, String timeToCook, long loveCount, Date postTime, int servings) {
 		super();
-		this.id = id;
-		this.user_id = user_id;
 		this.title = title;
 		this.description = description;
 		this.timeToCook = timeToCook;
-		this.ingredients = ingredients;
-		this.methods = methods;
-		this.photos = photos;
 		this.loveCount = loveCount;
 		this.postTime = postTime;
+		this.servings = servings;
+	}
+	
+	public Recipe(String title, String description, String timeToCook, int servings) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.timeToCook = timeToCook;
+		this.loveCount = 0;
+		this.postTime = new Date();
 		this.servings = servings;
 	}
 
@@ -43,14 +67,6 @@ private long id, user_id;
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
 	}
 
 	public String getTitle() {
@@ -77,33 +93,30 @@ private long id, user_id;
 		this.timeToCook = timeToCook;
 	}
 
-	public ArrayList<String> getIngredients() {
-		return ingredients;
-	}
- //##############################################################################
-	public void setIngredients(String ingredients) {
-		ArrayList<String> array = new ArrayList<String>();
-		this.ingredients = array;
+	public String getPhoto() {
+		return photo;
 	}
 
-	public ArrayList<String> getMethods() {
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	public List<Ingredient> getMethods() {
 		return methods;
 	}
 
-	public void setMethods(String methods) {
-		ArrayList<String> array = new ArrayList<String>();
-		this.methods = array;
+	public void setMethods(List<Ingredient> methods) {
+		this.methods = methods;
 	}
 
-	public ArrayList<String> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(String photos) {
-		ArrayList<String> array = new ArrayList<String>();
-		this.photos = array;
-	}
-//######################################################################################
 	public long getLoveCount() {
 		return loveCount;
 	}
@@ -112,11 +125,11 @@ private long id, user_id;
 		this.loveCount = loveCount;
 	}
 
-	public Timestamp getPostTime() {
+	public Date getPostTime() {
 		return postTime;
 	}
 
-	public void setPostTime(Timestamp postTime) {
+	public void setPostTime(Date postTime) {
 		this.postTime = postTime;
 	}
 
@@ -127,4 +140,13 @@ private long id, user_id;
 	public void setServings(int servings) {
 		this.servings = servings;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

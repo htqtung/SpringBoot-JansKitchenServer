@@ -1,62 +1,94 @@
 package fi.haagahelia.SpringBootJansKitchenServer.domain;
 
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+@Entity
 public class User {
-	private long id;
-    private String username, email;
-	
-    public User() {
-    	
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
+
+    private String name, avatar;
     
-	public User(long id, String username, String email) {
+    // Username with unique constraint
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @JsonIgnore
+    @Column(name = "password", nullable = false)
+    private String passwordHash;
+
+    @Column(name = "role", nullable = false)
+    private String role;
+    
+    public User() {
+    }
+
+	public User(String username, String passwordHash, String role) {
 		super();
-		this.id = id;
 		this.username = username;
-		this.email = email;
+		this.passwordHash = passwordHash;
+		this.role = role;
+	}
+	
+	public User(String name, String username, String passwordHash, String role) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.passwordHash = passwordHash;
+		this.role = role;
 	}
 
-
-
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-
-
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	public String getUsername() {
 		return username;
 	}
 
-
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-
-
-	public String getEmail() {
-		return email;
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 
-
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
+	public String getRole() {
+		return role;
+	}
 
+	public void setRole(String role) {
+		this.role = role;
+	}
 
-	@Override
-    public String toString() {
-        return String.format(
-                "Person[id=%d, firstName='%s', lastName='%s']",
-                id, username, email);
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	
 }

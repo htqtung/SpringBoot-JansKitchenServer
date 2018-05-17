@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Recipes</h1>
+    <table>
+		<tr>
+		    <th>Data</th>
+		</tr>  
+    	<tr th:each = "recipe : ${recipes}">
+    		<td th:text="${recipe.id} + '' + ${recipe.title} + ' '+ ${recipe.ingredients} + ' '+ ${recipe.methods} + ' ' + ${recipe.photos} + ' '+ ${recipe.photos} + ' '+ ${recipe.servings} + ' '+ ${recipe.timeToCook} + ' '+ ${recipe.loveCount} + ' '+ ${recipe.postTime} + ' ' + ${recipe.author_id}"></td>		
+    	</tr>
+     </table>  	
+</body>
+</html>

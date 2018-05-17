@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS user (
     user_id int(5) NOT NULL AUTO_INCREMENT,
     username varchar(50) DEFAULT NULL,
-    email varchar(50) NOT NULL,
+    password varchar(255) NOT NULL,
     avatar varchar(3000) DEFAULT NULL,
     PRIMARY KEY(user_id)
     );
@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS recipe (
 	recipe_id int(8) NOT NULL AUTO_INCREMENT,
 	title varchar(100) NOT NULL,
 	description varchar(1000),
-	ingredients varchar(30000),
-	methods varchar(30000),
-	photos varchar(30000),
+	ingredients varchar(10000),
+	methods varchar(10000),
+	photos varchar(10000),
 	servings int(3) DEFAULT NULL,
 	timeToCook varchar(50) DEFAULT NULL,
 	loveCount int(5) DEFAULT 0,
